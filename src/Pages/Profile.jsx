@@ -180,6 +180,53 @@ const Profile = () => {
 
             </div>
           </div>
+
+          {/* Posts */}
+            <div className="mt-10">
+              <h2 className="text-2xl font-semibold text-white mb-6">
+                Posts
+              </h2>
+
+              {!posts || posts.length === 0 ? (
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-12 text-center">
+                  <h1 className="text-gray-400 text-xl">
+                    No posts yet...
+                  </h1>
+                </div>
+              ) : (
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {posts.map((post) => (
+                    <div
+                      key={post._id}
+                      className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden"
+                    >
+                      <img
+                        src={post.imageUrl}
+                        alt="post"
+                        className="w-full h-60 object-cover"
+                      />
+
+                      <div className="p-4">
+                        <p className="text-white break-words">
+                          {post.caption}
+                        </p>
+
+                        <div className="flex justify-between mt-4 text-gray-400 text-sm">
+                          <span>
+                            ❤️ {post.likes?.length || 0}
+                          </span>
+
+                          <span>
+                            💬 {post.comments?.length || 0}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
         </div>
       </div>
     </div>
