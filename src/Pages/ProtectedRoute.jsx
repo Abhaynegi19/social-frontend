@@ -28,22 +28,23 @@ const ProtectedRoute = () => {
         getUserData()
     }, [])
 
-    // useEffect(() => {
-    //     if(userData && !userData.isCompletedProfile)
-    //     {
-    //         nav("/complete-profile")
-    //     }
-    // }, [userData])
+    useEffect(() => {
+  if (!userData.username) return;
+
+  if (userData.isCompletedProfile === false) {
+    nav("/complete-profile");
+  }
+}, [userData, nav]);
 
   if(!userData.username)
   {
     return <h1>Loading...</h1>
   }
   
-  if(!userData.isCompletedProfile)
-  {
-    nav("/complete-profile")
-  }
+//   if(!userData.isCompletedProfile)
+//   {
+//     nav("/complete-profile")
+//   }
 
   return <Outlet />
 
