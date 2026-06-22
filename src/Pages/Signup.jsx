@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import validator from "validator";
 import toast from "react-hot-toast";
@@ -54,7 +54,7 @@ const Signup = () => {
 
   const verifyOtp = async () => {
     try {
-      if (!validator.isNumeric(otp) || otp.length !== 6) {
+      if (!validator.isNumeric(otp) ) {
         toast.error("Please enter a valid 6-digit OTP");
         return;
       }
