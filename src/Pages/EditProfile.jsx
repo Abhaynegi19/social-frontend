@@ -167,24 +167,42 @@ const EditProfile = () => {
             </div>
 
             {/* Save Button */}
-            <button
-              onClick={async() => {
-                const res = await axios.patch(import.meta.env.VITE_BACKEND_URL + "/profile/edit", formData, {withCredentials : true})
-                // console.log(res)
-                dispatch(addUserData(res.data.data))
-                nav("/profile")
-              }}
-              className="
-                w-full py-3
-                bg-indigo-600 hover:bg-indigo-500
-                text-white font-semibold
-                rounded-xl
-                transition duration-300
-                hover:shadow-lg
-              "
-            >
-              Save Changes
-            </button>
+            {/* Buttons */}
+            <div className="flex gap-4">
+              <button
+                onClick={() => {
+                  nav("/profile")
+                }}
+                className="
+                  flex-1 py-3
+                  bg-white/10 hover:bg-white/20
+                  border border-white/10
+                  text-white font-semibold
+                  rounded-xl
+                  transition duration-300
+                "
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={async() => {
+                  const res = await axios.patch(import.meta.env.VITE_BACKEND_URL + "/profile/edit", formData, {withCredentials : true})
+                  dispatch(addUserData(res.data.data))
+                  nav("/profile")
+                }}
+                className="
+                  flex-1 py-3
+                  bg-indigo-600 hover:bg-indigo-500
+                  text-white font-semibold
+                  rounded-xl
+                  transition duration-300
+                  hover:shadow-lg
+                "
+              >
+                Save Changes
+              </button>
+            </div>
           </div>
         </div>
       </div>
