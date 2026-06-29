@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import Navbar from "../Components/Navbar"
 import Sidebar from "../Components/Sidebar"
+import { updateFollowing } from "../Utils/UserSlice"
 
 const UserProfile = () => {
   const { id } = useParams()
@@ -14,6 +15,7 @@ const UserProfile = () => {
   const [error, setError] = useState(null)
   const [isFollowing, setIsFollowing] = useState(false)
   const [followLoading, setFollowLoading] = useState(false)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     
@@ -51,6 +53,9 @@ const UserProfile = () => {
             ? prev.followers.filter((f) => f !== currentUser._id)
             : [...prev.followers, currentUser._id],
         }))
+
+         dispatch(updateFollowing({ targetId: id, isFollowing }))
+
     } catch (err) {
       console.error("Follow toggle failed", err)
     } finally {

@@ -6,9 +6,19 @@ const userSlice = createSlice({
     reducers : {
         addUserData : (state, action) => {
             return action.payload
+        },
+        updateFollowing: (state, action) => {
+            const { targetId, isFollowing } = action.payload
+             if (!state) return state
+
+              if (isFollowing) {
+                 state.following = state.following.filter((f) => f !== targetId)
+             } else {
+                state.following = [...state.following, targetId]
+             }
         }
     }
 })
 
 export default userSlice.reducer
-export const{ addUserData } = userSlice.actions
+export const{ addUserData, updateFollowing } = userSlice.actions
