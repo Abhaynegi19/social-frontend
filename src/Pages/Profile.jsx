@@ -5,6 +5,8 @@ import { addUserData } from "../Utils/UserSlice"
 import { useNavigate } from "react-router-dom"
 import Navbar from "../Components/Navbar"
 import Sidebar from "../Components/Sidebar"
+import PostModal from "./PostModal"
+import { updatePost } from "../Utils/UserSlice";
 
 const Profile = () => {
   const {
@@ -20,7 +22,12 @@ const Profile = () => {
 
   const[uploadedImg, setUploadedImg] = useState(null)
   const dispatch = useDispatch()
+  const [selectedPost, setSelectedPost] = useState(null)
   const nav = useNavigate()
+  
+  const handleUpdatePost = (postId, updatedFields) => {
+  dispatch(updatePost({ postId, updatedFields }))
+}
 
   useEffect(() => {
 
@@ -172,6 +179,7 @@ const Profile = () => {
                     {posts.map((post) => (
                       <div
                         key={post._id}
+                        onClick={() => setSelectedPost(post)}
                         className="
                           group relative
                           bg-white/5 border border-white/10
@@ -242,6 +250,13 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      {selectedPost && (
+      <PostModal
+        post={selectedPost}
+        onClose={() => setSelectedPost(null)}
+        onUpdatePost={handleUpdatePost}
+      />
+    )}
     </div>
   );
 };

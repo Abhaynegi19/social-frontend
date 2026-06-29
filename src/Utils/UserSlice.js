@@ -16,9 +16,17 @@ const userSlice = createSlice({
              } else {
                 state.following = [...state.following, targetId]
              }
+        },
+        updatePost : (state, action) => {
+            const { postId, updatedFields } = action.payload
+            if (!state) return state
+
+            state.posts = state.posts.map((p) =>
+                p._id === postId ? { ...p, ...updatedFields } : p
+            )
         }
     }
 })
 
 export default userSlice.reducer
-export const{ addUserData, updateFollowing } = userSlice.actions
+export const{ addUserData, updateFollowing, updatePost } = userSlice.actions
