@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import Navbar from "../Components/Navbar"
 import Sidebar from "../Components/Sidebar"
+import PostModal from "./PostModal"
 import { updateFollowing } from "../Utils/UserSlice"
 
 const UserProfile = () => {
@@ -15,6 +16,7 @@ const UserProfile = () => {
   const [error, setError] = useState(null)
   const [isFollowing, setIsFollowing] = useState(false)
   const [followLoading, setFollowLoading] = useState(false)
+  const [selectedPost, setSelectedPost] = useState(null)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -62,6 +64,15 @@ const UserProfile = () => {
       setFollowLoading(false)
     }
   }
+
+  const handleUpdatePost = (postId, updatedFields) => {
+  setUser((prev) => ({
+    ...prev,
+    posts: prev.posts.map((p) =>
+      p._id === postId ? { ...p, ...updatedFields } : p
+    ),
+  }))
+}
 
   if (loading) {
     return (
@@ -197,6 +208,7 @@ const UserProfile = () => {
                     {user.posts.map((post) => (
                       <div
                         key={post._id}
+                        onClick={() => setSelectedPost(post)}
                         className="
                           group relative
                           bg-white/5 border border-white/10
@@ -266,6 +278,13 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
+      {selectedPost && (
+      <PostModal
+        post={selectedPost}
+        onClose={() => setSelectedPost(null)}
+        onUpdatePost={handleUpdatePost}
+      />
+)}
     </div>
   )
 }
